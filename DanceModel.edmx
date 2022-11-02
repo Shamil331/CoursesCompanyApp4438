@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DanceCompanyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="PeopleQuantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Course_Id" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PricePlusVAT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price_Id" Type="int" Nullable="false" />
+          <Property Name="PriceVAT" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PeopleQuantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Education" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeacherCourse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Teacher_Id" Type="int" Nullable="false" />
+          <Property Name="Course_Id" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Post" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Request_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TraineeCourse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Course_Id" Type="int" Nullable="false" />
+          <Property Name="Trainee_Id" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Price_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="Course_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PricePlusVAT_Price">
+          <End Role="Price" Type="Self.Price" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PricePlusVAT" Type="Self.PricePlusVAT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Price">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricePlusVAT">
+              <PropertyRef Name="Price_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="Course_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="Teacher_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trainee_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Trainee" Type="Self.Trainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trainee">
+              <PropertyRef Name="Request_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TraineeCourse" Type="Self.TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="Course_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Trainee">
+          <End Role="Trainee" Type="Self.Trainee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TraineeCourse" Type="Self.TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="Trainee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DanceCompanyModelContainer">
+          <EntitySet Name="Agency" EntityType="Self.Agency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricePlusVAT" EntityType="Self.PricePlusVAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherCourse" EntityType="Self.TeacherCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainee" EntityType="Self.Trainee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TraineeCourse" EntityType="Self.TraineeCourse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Price_Course" Association="Self.FK_Price_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PricePlusVAT_Price" Association="Self.FK_PricePlusVAT_Price">
+            <End Role="Price" EntitySet="Price" />
+            <End Role="PricePlusVAT" EntitySet="PricePlusVAT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Course" Association="Self.FK_TeacherCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Teacher" Association="Self.FK_TeacherCourse_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trainee_Request" Association="Self.FK_Trainee_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Trainee" EntitySet="Trainee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Course" Association="Self.FK_TraineeCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Trainee" Association="Self.FK_TraineeCourse_Trainee">
+            <End Role="Trainee" EntitySet="Trainee" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DanceCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agency">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="PeopleQuantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Price" Relationship="Self.FK_Price_Course" FromRole="Course" ToRole="Price" />
+          <NavigationProperty Name="TeacherCourse" Relationship="Self.FK_TeacherCourse_Course" FromRole="Course" ToRole="TeacherCourse" />
+          <NavigationProperty Name="TraineeCourse" Relationship="Self.FK_TraineeCourse_Course" FromRole="Course" ToRole="TraineeCourse" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Course_Id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Price1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Price_Course" FromRole="Price" ToRole="Course" />
+          <NavigationProperty Name="PricePlusVAT" Relationship="Self.FK_PricePlusVAT_Price" FromRole="Price" ToRole="PricePlusVAT" />
+        </EntityType>
+        <EntityType Name="PricePlusVAT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price_Id" Type="Int32" Nullable="false" />
+          <Property Name="PriceVAT" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Price" Relationship="Self.FK_PricePlusVAT_Price" FromRole="PricePlusVAT" ToRole="Price" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PeopleQuantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Trainee" Relationship="Self.FK_Trainee_Request" FromRole="Request" ToRole="Trainee" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Sex" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Education" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TeacherCourse" Relationship="Self.FK_TeacherCourse_Teacher" FromRole="Teacher" ToRole="TeacherCourse" />
+        </EntityType>
+        <EntityType Name="TeacherCourse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Teacher_Id" Type="Int32" Nullable="false" />
+          <Property Name="Course_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_TeacherCourse_Course" FromRole="TeacherCourse" ToRole="Course" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_TeacherCourse_Teacher" FromRole="TeacherCourse" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Trainee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Post" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Request_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Trainee_Request" FromRole="Trainee" ToRole="Request" />
+          <NavigationProperty Name="TraineeCourse" Relationship="Self.FK_TraineeCourse_Trainee" FromRole="Trainee" ToRole="TraineeCourse" />
+        </EntityType>
+        <EntityType Name="TraineeCourse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Course_Id" Type="Int32" Nullable="false" />
+          <Property Name="Trainee_Id" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_TraineeCourse_Course" FromRole="TraineeCourse" ToRole="Course" />
+          <NavigationProperty Name="Trainee" Relationship="Self.FK_TraineeCourse_Trainee" FromRole="TraineeCourse" ToRole="Trainee" />
+        </EntityType>
+        <Association Name="FK_Price_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Price" Type="Self.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="Course_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="Course_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Course">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TraineeCourse" Type="Self.TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="Course_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PricePlusVAT_Price">
+          <End Role="Price" Type="Self.Price" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PricePlusVAT" Type="Self.PricePlusVAT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Price">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PricePlusVAT">
+              <PropertyRef Name="Price_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Trainee_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Trainee" Type="Self.Trainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trainee">
+              <PropertyRef Name="Request_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherCourse_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeacherCourse" Type="Self.TeacherCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherCourse">
+              <PropertyRef Name="Teacher_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Trainee">
+          <End Role="Trainee" Type="Self.Trainee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TraineeCourse" Type="Self.TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="Trainee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DanceCompanyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agency" EntityType="Self.Agency" />
+          <EntitySet Name="Course" EntityType="Self.Course" />
+          <EntitySet Name="Price" EntityType="Self.Price" />
+          <EntitySet Name="PricePlusVAT" EntityType="Self.PricePlusVAT" />
+          <EntitySet Name="Request" EntityType="Self.Request" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" />
+          <EntitySet Name="TeacherCourse" EntityType="Self.TeacherCourse" />
+          <EntitySet Name="Trainee" EntityType="Self.Trainee" />
+          <EntitySet Name="TraineeCourse" EntityType="Self.TraineeCourse" />
+          <AssociationSet Name="FK_Price_Course" Association="Self.FK_Price_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Price" EntitySet="Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Course" Association="Self.FK_TeacherCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Course" Association="Self.FK_TraineeCourse_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PricePlusVAT_Price" Association="Self.FK_PricePlusVAT_Price">
+            <End Role="Price" EntitySet="Price" />
+            <End Role="PricePlusVAT" EntitySet="PricePlusVAT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Trainee_Request" Association="Self.FK_Trainee_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="Trainee" EntitySet="Trainee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherCourse_Teacher" Association="Self.FK_TeacherCourse_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="TeacherCourse" EntitySet="TeacherCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Trainee" Association="Self.FK_TraineeCourse_Trainee">
+            <End Role="Trainee" EntitySet="Trainee" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DanceCompanyModelContainer" CdmEntityContainer="DanceCompanyEntities">
+          <EntitySetMapping Name="Agency">
+            <EntityTypeMapping TypeName="DanceCompanyModel.Agency">
+              <MappingFragment StoreEntitySet="Agency">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Course">
+            <EntityTypeMapping TypeName="DanceCompanyModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="PeopleQuantity" ColumnName="PeopleQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Price">
+            <EntityTypeMapping TypeName="DanceCompanyModel.Price">
+              <MappingFragment StoreEntitySet="Price">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Course_Id" ColumnName="Course_Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Price1" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PricePlusVAT">
+            <EntityTypeMapping TypeName="DanceCompanyModel.PricePlusVAT">
+              <MappingFragment StoreEntitySet="PricePlusVAT">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Price_Id" ColumnName="Price_Id" />
+                <ScalarProperty Name="PriceVAT" ColumnName="PriceVAT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="DanceCompanyModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PeopleQuantity" ColumnName="PeopleQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="DanceCompanyModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherCourse">
+            <EntityTypeMapping TypeName="DanceCompanyModel.TeacherCourse">
+              <MappingFragment StoreEntitySet="TeacherCourse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Teacher_Id" ColumnName="Teacher_Id" />
+                <ScalarProperty Name="Course_Id" ColumnName="Course_Id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainee">
+            <EntityTypeMapping TypeName="DanceCompanyModel.Trainee">
+              <MappingFragment StoreEntitySet="Trainee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Post" ColumnName="Post" />
+                <ScalarProperty Name="Request_Id" ColumnName="Request_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TraineeCourse">
+            <EntityTypeMapping TypeName="DanceCompanyModel.TraineeCourse">
+              <MappingFragment StoreEntitySet="TraineeCourse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Course_Id" ColumnName="Course_Id" />
+                <ScalarProperty Name="Trainee_Id" ColumnName="Trainee_Id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

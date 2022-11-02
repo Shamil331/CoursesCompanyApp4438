@@ -1,0 +1,62 @@
+﻿<Window x:Class="DanceCompnayApp4438.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DanceCompnayApp4438"
+        mc:Ignorable="d"
+        Title="Курсы" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock VerticalAlignment="Top" Text="Обучение на курсах" HorizontalAlignment="Center" Grid.ColumnSpan="3" FontWeight="Bold" FontSize="35"/>
+        <Button x:Name="CourseBtn" HorizontalAlignment="Center" Grid.ColumnSpan="2" Click="CourseBtn_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <TextBlock Text="Просмотреть курсы"/>
+        </Button>
+        <Button x:Name="RequestBtn" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Click="RequestBtn_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <TextBlock Text="Просмотреть заявки"/>
+        </Button>
+        <Button x:Name="PriceBtn" HorizontalAlignment="Right" Grid.Row="1" Click="PriceBtn_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <TextBlock Text="Изменить цены"/>
+        </Button>
+        <Button x:Name="TraineeBtn" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Click="TraineeBtn_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <TextBlock Text="Обучающиеся"/>
+        </Button>
+        <Button x:Name="TeacherPDFBtn" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Click="TeacherPDFBtn_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <TextBlock Text="Экспорт преподавателей в pdf файл"/>
+        </Button>
+    </Grid>
+</Window>

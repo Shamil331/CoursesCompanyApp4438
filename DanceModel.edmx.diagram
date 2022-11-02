@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6e2a2ef2d465477e90432794abc42424" Name="Diagram1">
+        <EntityTypeShape EntityType="DanceCompanyModel.Agency" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.Course" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.Price" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.PricePlusVAT" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.Request" Width="1.5" PointX="1.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.Teacher" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.TeacherCourse" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.Trainee" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DanceCompanyModel.TraineeCourse" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="DanceCompanyModel.FK_Price_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="DanceCompanyModel.FK_TeacherCourse_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="DanceCompanyModel.FK_TraineeCourse_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="DanceCompanyModel.FK_PricePlusVAT_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="DanceCompanyModel.FK_Trainee_Request" ManuallyRouted="false" />
+        <AssociationConnector Association="DanceCompanyModel.FK_TeacherCourse_Teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="DanceCompanyModel.FK_TraineeCourse_Trainee" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
